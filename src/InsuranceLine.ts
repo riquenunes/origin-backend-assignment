@@ -1,3 +1,6 @@
+import RiskCalculator from './RiskCalculator';
+import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+
 export enum InsurancePlan {
   Economic = 'economic',
   Regular = 'regular',
@@ -5,17 +8,32 @@ export enum InsurancePlan {
   Inelegible = 'inelegible',
 }
 
-export default class InsuranceLine {
+export default abstract class InsuranceLine {
   constructor(
-    private readonly score: number,
-    private readonly isElegible: boolean,
-  ) { }
+    protected readonly input: RiskProfileCalculatorInput,
+    private readonly riskCalculator: RiskCalculator,
+  ) {
+  }
+
+  public abstract get isElegible(): boolean;
+
+  public get finalScore(): number {
+    const finalScore = this.riskCalculator.calculateRisk(this.input, this.initialScore);
+
+    return finalScore;
+  }
 
   public get plan(): InsurancePlan {
     if (!this.isElegible) return InsurancePlan.Inelegible;
-    if (this.score <= 0) return InsurancePlan.Economic;
-    if (this.score === 1 || this.score === 2) return InsurancePlan.Regular;
+    if (this.finalScore <= 0) return InsurancePlan.Economic;
+    if (this.finalScore <= 2) return InsurancePlan.Regular;
 
     return InsurancePlan.Responsible;
+  }
+
+  private get initialScore(): number {
+    return this.input.riskQuestions.reduce(
+      (score, question) => score + question, 0
+    );
   }
 }
