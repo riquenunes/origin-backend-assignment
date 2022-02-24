@@ -1,20 +1,19 @@
-import DisabilityInsuranceRiskCalculator from '../../src/DisabilityInsuranceRiskCalculator';
-import { InsurancePlan } from '../../src/InsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/RiskProfileCalculatorInput';
+import DisabilityInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/DisabilityInsuranceRiskCalculator';
+import { stub } from '../doubles/stubs/UserProfile';
 
 describe('Disability insurance risk calculator', () => {
   it('returns that the user is inelegible for a disability insurance plan when the user does not have an income', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
     const input = stub({ age: 30, income: 0 })
 
-    expect(insuranceRiskCalculator.calculate(input).plan).toBe(InsurancePlan.Inelegible);
+    expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('returns that the user is inelegible for a disability insurance plan when the user is over 60 years old', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
     const input = stub({ age: 61, income: 1000 })
 
-    expect(insuranceRiskCalculator.calculate(input).plan).toBe(InsurancePlan.Inelegible);
+    expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the disability insurance score when the user is under 30 years old', () => {

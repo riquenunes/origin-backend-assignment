@@ -1,13 +1,12 @@
-import AutoInsuranceRiskCalculator from '../../src/AutoInsuranceRiskCalculator';
-import { InsurancePlan } from '../../src/InsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/RiskProfileCalculatorInput';
+import AutoInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/AutoInsuranceRiskCalculator';
+import { stub } from '../doubles/stubs/UserProfile';
 
 describe('Auto insurance risk calculator', () => {
   it('returns that the user is inelegible for an auto plan when the user does not have a vehicle', () => {
     const insuranceRiskCalculator = new AutoInsuranceRiskCalculator();
     const input = stub({ vehicle: undefined });
 
-    expect(insuranceRiskCalculator.calculate(input).plan).toBe(InsurancePlan.Inelegible);
+    expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the auto insurance score when the user is under 30 years old', () => {

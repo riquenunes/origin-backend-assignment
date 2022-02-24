@@ -1,4 +1,4 @@
-import UserProfile from '../../../src/UserProfile';
+import UserProfile from '../../../src/domain/UserProfile';
 import chance from 'chance';
 
 export const stub = (

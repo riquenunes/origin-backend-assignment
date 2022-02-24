@@ -1,13 +1,12 @@
-import LifeInsuranceRiskCalculator from '../../src/LifeInsuranceRiskCalculator';
-import { InsurancePlan } from '../../src/InsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/RiskProfileCalculatorInput';
+import LifeInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/LifeInsuranceRiskCalculator';
+import { stub } from '../doubles/stubs/UserProfile';
 
 describe('Life insurance risk calculator', () => {
   it('returns that the user is inelegible for a life insurance plan when the user is over 60 years old', () => {
     const insuranceRiskCalculator = new LifeInsuranceRiskCalculator();
     const input = stub({ age: 61 })
 
-    expect(insuranceRiskCalculator.calculate(input).plan).toBe(InsurancePlan.Inelegible);
+    expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the life insurance score when the user is under 30 years old', () => {

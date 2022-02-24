@@ -1,13 +1,12 @@
-import HomeInsuranceRiskCalculator from '../../src/HomeInsuranceRiskCalculator';
-import { InsurancePlan } from '../../src/InsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/RiskProfileCalculatorInput';
+import HomeInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/HomeInsuranceRiskCalculator';
+import { stub } from '../doubles/stubs/UserProfile';
 
 describe('Home insurance risk calculator', () => {
   it('returns that the user is inelegible for an home insurance plan when the user does not have a house', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
     const input = stub({ house: undefined })
 
-    expect(insuranceRiskCalculator.calculate(input).plan).toBe(InsurancePlan.Inelegible);
+    expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the home insurance score when the user is under 30 years old', () => {
