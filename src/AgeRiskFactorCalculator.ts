@@ -1,8 +1,8 @@
 import RiskFactorCalculator from './RiskFactorCalculator';
-import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+import UserProfile from './UserProfile';
 
 export default class AgeRiskFactorCalculator extends RiskFactorCalculator {
-  protected calculateRiskIncrement(input: RiskProfileCalculatorInput): number {
+  protected calculateRiskIncrement(input: UserProfile): number {
     if (input.age < 30) return -2;
     if (input.age <= 40) return -1;
 

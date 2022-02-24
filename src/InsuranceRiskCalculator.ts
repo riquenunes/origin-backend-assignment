@@ -1,5 +1,5 @@
 import RiskFactorCalculator from './RiskFactorCalculator';
-import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+import UserProfile from './UserProfile';
 
 export enum InsurancePlan {
   Economic = 'economic',
@@ -13,7 +13,7 @@ export default abstract class InsuranceRiskCalculator {
     protected readonly riskFactorCalculatorChain: RiskFactorCalculator,
   ) { }
 
-  protected abstract isElegible(input: RiskProfileCalculatorInput): boolean;
+  protected abstract isElegible(input: UserProfile): boolean;
 
   /**
    * This function could have probably be moved to a separate class
@@ -31,21 +31,28 @@ export default abstract class InsuranceRiskCalculator {
     return InsurancePlan.Responsible;
   }
 
-  protected calculateFinalScore(input: RiskProfileCalculatorInput): number {
-    return this.riskFactorCalculatorChain.calculateRiskFactor(
-      input,
-      input.initialScore,
+  private calculateBaseScore(input: UserProfile): number {
+    return input.riskQuestions.reduce(
+      (score, question) => score + question, 0
     );
   }
 
-  public calculate(input: RiskProfileCalculatorInput) {
-    const finalScore = this.calculateFinalScore(input);
+  protected calculateRiskScore(input: UserProfile, baseScore: number): number {
+    return this.riskFactorCalculatorChain.calculateRiskFactorScore(
+      input,
+      baseScore,
+    );
+  }
+
+  public calculate(input: UserProfile) {
+    const baseScore = this.calculateBaseScore(input);
+    const riskScore = this.calculateRiskScore(input, baseScore);
     const isElegible = this.isElegible(input);
-    const plan = this.calculatePlan(finalScore, isElegible);
+    const plan = this.calculatePlan(riskScore, isElegible);
 
     return {
       isElegible,
-      finalScore,
+      riskScore,
       plan,
     }
   }

@@ -1,8 +1,8 @@
 import RiskFactorCalculator from './RiskFactorCalculator';
-import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+import UserProfile from './UserProfile';
 
 export default class VehicleRiskFactorCalculator extends RiskFactorCalculator {
-  protected calculateRiskIncrement(input: RiskProfileCalculatorInput): number {
+  protected calculateRiskIncrement(input: UserProfile): number {
     let increment = 0;
     const currentYear = new Date().getFullYear();
 

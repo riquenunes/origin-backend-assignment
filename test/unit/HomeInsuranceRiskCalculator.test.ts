@@ -19,7 +19,7 @@ describe('Home insurance risk calculator', () => {
       income: 1000,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(1);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(1);
   });
 
   it('deducts 1 risk point from the home insurance score when the user is between 30 and 40 years old', () => {
@@ -31,7 +31,7 @@ describe('Home insurance risk calculator', () => {
       income: 1000,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(2);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(2);
   });
 
   it('deducts 1 risk point from the home insurance score when the user income is above $200k', () => {
@@ -43,7 +43,7 @@ describe('Home insurance risk calculator', () => {
       income: 200001,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(2);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(2);
   });
 
   it('adds 1 risk point to the home insurance score when the user\'s house is mortgaged', () => {
@@ -55,6 +55,6 @@ describe('Home insurance risk calculator', () => {
       income: 1000,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(4);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(4);
   });
 });

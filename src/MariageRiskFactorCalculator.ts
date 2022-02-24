@@ -1,5 +1,5 @@
 import RiskFactorCalculator from './RiskFactorCalculator';
-import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+import UserProfile from './UserProfile';
 
 export default class MariageRiskFactorCalculator extends RiskFactorCalculator {
   constructor(
@@ -8,7 +8,7 @@ export default class MariageRiskFactorCalculator extends RiskFactorCalculator {
     super();
   }
 
-  protected calculateRiskIncrement(input: RiskProfileCalculatorInput): number {
+  protected calculateRiskIncrement(input: UserProfile): number {
     if (input.maritalStatus === 'married') return this.riskWeight;
 
     return 0;

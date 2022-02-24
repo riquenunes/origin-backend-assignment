@@ -6,7 +6,7 @@ interface VehicleInfo {
   year: number;
 }
 
-export default class RiskProfileCalculatorInput {
+export default class UserProfile {
   constructor(
     public readonly age: number,
     public readonly dependents: number,
@@ -16,20 +16,4 @@ export default class RiskProfileCalculatorInput {
     public readonly house: HouseInfo | undefined,
     public readonly vehicle: VehicleInfo | undefined,
   ) { }
-
-  public get initialScore(): number {
-    return this.riskQuestions.reduce(
-      (score, question) => score + question, 0
-    );
-  }
 }
-
-// export default interface RiskProfileCalculatorInput {
-//   age: number;
-//   dependents: number;
-//   income: number;
-//   maritalStatus: 'married' | 'single';
-//   riskQuestions: number[];
-//   house?: HouseInfo;
-//   vehicle?: VehicleInfo;
-// }

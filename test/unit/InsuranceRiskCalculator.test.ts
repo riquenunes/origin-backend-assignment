@@ -1,6 +1,6 @@
 import InsuranceRiskCalculator, { InsurancePlan } from '../../src/InsuranceRiskCalculator';
 import RiskFactorCalculator from '../../src/RiskFactorCalculator';
-import RiskProfileCalculatorInput from '../../src/RiskProfileCalculatorInput';
+import UserProfile from '../../src/UserProfile';
 import { stub } from '../doubles/stubs/RiskProfileCalculatorInput';
 
 class DummyInsuranceRiskCalculator extends InsuranceRiskCalculator {
@@ -15,13 +15,13 @@ class DummyInsuranceRiskCalculator extends InsuranceRiskCalculator {
     return this.elegibilityOverride;
   }
 
-  protected calculateFinalScore(input: RiskProfileCalculatorInput): number {
+  protected calculateRiskScore(): number {
     return this.scoreOverride;
   }
 }
 
 class DummyRiskFactorCalculator extends RiskFactorCalculator {
-  protected calculateRiskIncrement(input: RiskProfileCalculatorInput): number {
+  protected calculateRiskIncrement(input: UserProfile): number {
     return 0;
   }
 }

@@ -4,7 +4,7 @@ import HouseRiskFactorCalculator from './HouseRiskFactorCalculator';
 import IncomeRiskFactorCalculator from './IncomeRiskFactorCalculator';
 import InsuranceRiskCalculator from './InsuranceRiskCalculator';
 import MariageRiskFactorCalculator from './MariageRiskFactorCalculator';
-import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+import UserProfile from './UserProfile';
 
 export default class DisabilityInsuranceRiskCalculator extends InsuranceRiskCalculator {
   constructor() {
@@ -18,7 +18,7 @@ export default class DisabilityInsuranceRiskCalculator extends InsuranceRiskCalc
     super(riskFactorCalculatorChain);
   }
 
-  protected isElegible(input: RiskProfileCalculatorInput): boolean {
+  protected isElegible(input: UserProfile): boolean {
     return input.income > 0 && input.age <= 60;
   }
 }

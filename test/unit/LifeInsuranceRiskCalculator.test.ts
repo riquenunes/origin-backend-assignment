@@ -20,7 +20,7 @@ describe('Life insurance risk calculator', () => {
       income: 1000,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(1);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(1);
   });
 
   it('deducts 1 risk point from the life insurance score when the user is between 30 and 40 years old', () => {
@@ -33,7 +33,7 @@ describe('Life insurance risk calculator', () => {
       income: 1000,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(2);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(2);
   });
 
   it('deducts 1 risk point from the life insurance score when the user income is above $200k', () => {
@@ -46,6 +46,6 @@ describe('Life insurance risk calculator', () => {
       income: 200001,
     });
 
-    expect(insuranceRiskCalculator.calculate(input).finalScore).toBe(2);
+    expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(2);
   });
 });

@@ -1,4 +1,4 @@
-import RiskProfileCalculatorInput from './RiskProfileCalculatorInput';
+import UserProfile from './UserProfile';
 
 export default abstract class RiskFactorCalculator {
   private nextHandler?: RiskFactorCalculator;
@@ -9,18 +9,18 @@ export default abstract class RiskFactorCalculator {
     return next;
   }
 
-  protected abstract calculateRiskIncrement(input: RiskProfileCalculatorInput): number;
+  protected abstract calculateRiskIncrement(input: UserProfile): number;
 
-  public calculateRiskFactor(
-    input: RiskProfileCalculatorInput,
-    currentRisk: number,
+  public calculateRiskFactorScore(
+    input: UserProfile,
+    currentRiskScore: number,
   ): number {
     const increment = this.calculateRiskIncrement(input);
-    const updatedRisk = currentRisk + increment;
+    const updatedRisk = currentRiskScore + increment;
 
     if (this.nextHandler) {
 
-      return this.nextHandler.calculateRiskFactor(input, updatedRisk);
+      return this.nextHandler.calculateRiskFactorScore(input, updatedRisk);
     }
 
     return updatedRisk;
