@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev src/index.ts",
-    "test": "jest test/"
+    "dev": "ts-node-dev src/app/index.ts",
+    "test": "jest --verbose --coverage test/"
   },
   "repository": {
     "type": "git",
@@ -34,5 +34,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "fastify": "3.27.2"
   }
 }
