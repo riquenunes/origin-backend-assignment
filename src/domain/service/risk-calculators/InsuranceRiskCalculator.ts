@@ -15,7 +15,7 @@ export default abstract class InsuranceRiskCalculator {
     );
   }
 
-  protected calculateRiskScore(profile: UserProfile, baseScore: number): number {
+  private calculateRiskScore(profile: UserProfile, baseScore: number): number {
     return this.riskFactors.getScore(
       profile,
       baseScore,
