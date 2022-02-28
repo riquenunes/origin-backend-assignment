@@ -1,4 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
+import { StatusCodes } from 'http-status-codes';
 import InsurancePlanAdvisor from '../../application/InsurancePlanAdvisor';
 import UserProfile from '../../domain/UserProfile';
 
@@ -21,5 +22,5 @@ export const buildHandler = (insurancePlanAdvisor: InsurancePlanAdvisor) => (
 
   const response = insurancePlanAdvisor.getIdealInsurancePlans(userProfile);
 
-  reply.status(200).send(response);
+  reply.status(StatusCodes.OK).send(response);
 }
