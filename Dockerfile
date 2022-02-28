@@ -9,4 +9,4 @@ RUN npm run build
 
 USER node
 
-CMD ["node", "dist/app/index.js"]
+CMD ["node", "dist/server/index.js"]
