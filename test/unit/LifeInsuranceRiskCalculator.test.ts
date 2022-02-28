@@ -1,17 +1,17 @@
-import LifeInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/LifeInsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/UserProfile';
+import LifeInsuranceRiskCalculator from '../../src/domain/services/risk-calculators/LifeInsuranceRiskCalculator';
+import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('Life insurance risk calculator', () => {
   it('returns that the user is inelegible for a life insurance plan when the user is over 60 years old', () => {
     const insuranceRiskCalculator = new LifeInsuranceRiskCalculator();
-    const input = stub({ age: 61 })
+    const input = new UserProfileDummy({ age: 61 })
 
     expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the life insurance score when the user is under 30 years old', () => {
     const insuranceRiskCalculator = new LifeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       riskQuestions: [1, 1, 1],
       age: 29,
       dependents: 0,
@@ -24,7 +24,7 @@ describe('Life insurance risk calculator', () => {
 
   it('deducts 1 risk point from the life insurance score when the user is between 30 and 40 years old', () => {
     const insuranceRiskCalculator = new LifeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 35,
       riskQuestions: [1, 1, 1],
       dependents: 0,
@@ -37,7 +37,7 @@ describe('Life insurance risk calculator', () => {
 
   it('deducts 1 risk point from the life insurance score when the user income is above $200k', () => {
     const insuranceRiskCalculator = new LifeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       dependents: 0,

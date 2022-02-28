@@ -1,4 +1,4 @@
-import RiskCalculationResult from '../../RiskCalculationResult';
+import RiskProfile from '../../RiskProfile';
 import UserProfile from '../../UserProfile';
 import RiskFactor from './risk-factors/RiskFactor';
 
@@ -22,7 +22,7 @@ export default abstract class InsuranceRiskCalculator {
     );
   }
 
-  public calculate(profile: UserProfile): RiskCalculationResult {
+  public calculate(profile: UserProfile): RiskProfile {
     const baseScore = this.calculateBaseScore(profile);
     const riskScore = this.calculateRiskScore(profile, baseScore);
     const isElegible = this.isElegible(profile);

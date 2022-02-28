@@ -1,5 +1,5 @@
-import RiskCalculationResult from '../RiskCalculationResult';
-import RiskScoreProcessor from './RiskCalculationResultProcessor';
+import RiskProfile from '../RiskProfile';
+import RiskProfileProcessor from './RiskProfileProcessor';
 
 export enum InsurancePlan {
   Economic = 'economic',
@@ -8,8 +8,8 @@ export enum InsurancePlan {
   Inelegible = 'inelegible',
 }
 
-export default class InsurancePlanChooser implements RiskScoreProcessor<InsurancePlan> {
-  process({ isElegible, riskScore }: RiskCalculationResult): InsurancePlan {
+export default class InsurancePlanChooser implements RiskProfileProcessor<InsurancePlan> {
+  process({ isElegible, riskScore }: RiskProfile): InsurancePlan {
     if (!isElegible) return InsurancePlan.Inelegible;
     if (riskScore <= 0) return InsurancePlan.Economic;
     if (riskScore <= 2) return InsurancePlan.Regular;

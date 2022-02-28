@@ -17,7 +17,7 @@ export default class HomeInsuranceRiskCalculator extends InsuranceRiskCalculator
     super(riskFactors);
   }
 
-  protected isElegible(input: UserProfile): boolean {
-    return !!input.house;
+  protected isElegible(profile: UserProfile): boolean {
+    return !!profile.house;
   }
 }

@@ -1,24 +1,24 @@
-import DisabilityInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/DisabilityInsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/UserProfile';
+import DisabilityInsuranceRiskCalculator from '../../src/domain/services/risk-calculators/DisabilityInsuranceRiskCalculator';
+import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('Disability insurance risk calculator', () => {
   it('returns that the user is inelegible for a disability insurance plan when the user does not have an income', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({ age: 30, income: 0 })
+    const input = new UserProfileDummy({ age: 30, income: 0 })
 
     expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('returns that the user is inelegible for a disability insurance plan when the user is over 60 years old', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({ age: 61, income: 1000 })
+    const input = new UserProfileDummy({ age: 61, income: 1000 })
 
     expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the disability insurance score when the user is under 30 years old', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 29,
       riskQuestions: [1, 1, 1],
       income: 1000,
@@ -32,7 +32,7 @@ describe('Disability insurance risk calculator', () => {
 
   it('deducts 1 risk point from the disability insurance score when the user is between 30 and 40 years old', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 35,
       riskQuestions: [1, 1, 1],
       income: 1000,
@@ -46,7 +46,7 @@ describe('Disability insurance risk calculator', () => {
 
   it('deducts 1 risk point from the disability insurance score when the user income is above $200k', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       income: 200001,
@@ -60,7 +60,7 @@ describe('Disability insurance risk calculator', () => {
 
   it('adds 1 risk point to the disability insurance score when the user\'s house is mortgaged', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       income: 1000,
@@ -74,7 +74,7 @@ describe('Disability insurance risk calculator', () => {
 
   it('adds 1 risk point to the disability insurance score when the user has dependents', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       income: 1000,
@@ -88,7 +88,7 @@ describe('Disability insurance risk calculator', () => {
 
   it('deducts 1 risk point from the disability insurance score when the user is married', () => {
     const insuranceRiskCalculator = new DisabilityInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       income: 1000,

@@ -1,17 +1,17 @@
-import HomeInsuranceRiskCalculator from '../../src/domain/service/risk-calculators/HomeInsuranceRiskCalculator';
-import { stub } from '../doubles/stubs/UserProfile';
+import HomeInsuranceRiskCalculator from '../../src/domain/services/risk-calculators/HomeInsuranceRiskCalculator';
+import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('Home insurance risk calculator', () => {
   it('returns that the user is inelegible for an home insurance plan when the user does not have a house', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
-    const input = stub({ house: undefined })
+    const input = new UserProfileDummy({ house: undefined })
 
     expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
   it('deducts 2 risk points from the home insurance score when the user is under 30 years old', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 29,
       riskQuestions: [1, 1, 1],
       house: undefined,
@@ -23,7 +23,7 @@ describe('Home insurance risk calculator', () => {
 
   it('deducts 1 risk point from the home insurance score when the user is between 30 and 40 years old', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 35,
       riskQuestions: [1, 1, 1],
       house: undefined,
@@ -35,7 +35,7 @@ describe('Home insurance risk calculator', () => {
 
   it('deducts 1 risk point from the home insurance score when the user income is above $200k', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       house: undefined,
@@ -47,7 +47,7 @@ describe('Home insurance risk calculator', () => {
 
   it('adds 1 risk point to the home insurance score when the user\'s house is mortgaged', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
-    const input = stub({
+    const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
       house: { ownershipStatus: 'mortgaged' },
