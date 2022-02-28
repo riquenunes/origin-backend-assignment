@@ -1,8 +1,10 @@
-Hi there! This is my entry to Origin's senior backend position assignment. The project was made using TypeScript and Node.js because they are the technologies I work with daily and felt like was less "risky" using for the assignment.
+# Insurance Plan Advisor
 
-# About the solution
+Hi there! This is my entry to Origin's senior backend position assignment. The project was made using TypeScript and Node.js because they are the tools I work with daily and felt less insecure about using for the assignment.
 
-I've tried taking a more domain driven approach, so you will notice that the HTTP server part of the solution was purposelly made to be very small. This allows us to easily test the solution without having to worry about the server itself and also allows us to easily swap the HTTP server for a different kind of server in the future (such as gRPC), if it is ever needed.
+## About the solution
+
+I've tried taking a more domain driven approach, so you will notice that the HTTP server part of the solution was purposelly made to be very small. This allows us to easily test the solution without having to worry about the server itself and also allows us to easily add different kinds of applications in the future (such as a gRPC server or even a CLI) reusing great part of the existing code.
 
 As far as the business logic goes, you will see that I have several `InsuranceRiskCalculator` classes (domain services), each one being concerned with calculating the risk score for a specific insurance line (auto, home, life or disability).
 
@@ -10,35 +12,35 @@ The core idea of the solution was implementing it in a way that all score changi
 
 I have also left some comments in the code itself, so feel free to check them out!
 
-## About the tests
+### About the tests
 My main goal was translating the business requirements into tests as close as possible, so my approach was to first implement the test cases described in the assignment (eg "If the user is over 60 years old, she is ineligible for disability and life insurance.") and kinda build everything from there, by making sure those tests pass and then adding new specific tests as needed.
 
 
-## Project structure
+### Project structure
 - `application`: application services - used to glue together the domain services and entities and to serve as entypoints from the external world to our domain
 - `domain`: everything related to the domain (entities, domain services, etc)
 - `infrastructure`: just contains a file meant to serve as a single point for all instances of the services used in the application
 - `server`: thin HTTP server that exposes our application services to the outside world
 
-# Running
+## Running
 
 Make sure you have Docker installed
 
 Build the image:
-```
+```sh
 docker build -t awesome-assignment .
 ```
 
 Run:
-```
+```sh
 docker run -p 3000:1337 -t awesome-assignment # you can change 3000 to any other port you have available
 ```
 
-# Testing
+## Testing
 
 After the above steps a HTTP server will be running on port 3000 (or whatever port you chose)
 
-## Sending a request
+### Sending a request
 The application exposes a single endpoint at `/` that receives a POST request and expects the same body as the one described in the assignment's README.
 
 ```sh
@@ -65,7 +67,7 @@ Expected response (200):
 }
 ```
 
-## Running tests
+### Running tests
 
 You can also run the tests using the same Docker image above:
 ```sh
