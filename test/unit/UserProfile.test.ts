@@ -1,5 +1,5 @@
 import ValidationError from '../../src/domain/errors/ValidationError';
-import UserProfile from '../../src/domain/UserProfile';
+import UserProfile, { HouseInfo, VehicleInfo } from '../../src/domain/UserProfile';
 import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('User profile', () => {
@@ -20,13 +20,13 @@ describe('User profile', () => {
 
     it('throws a validation error when house ownership status is not passed', () => {
       expect(() => new UserProfileDummy({
-        house: {} as any // need to cast to any otherwise typescript wouldn't let me pass an empty object
+        house: new HouseInfo(undefined)
       })).toThrow(ValidationError);
     });
 
     it('throws a validation error when vehicle year is not passed', () => {
       expect(() => new UserProfileDummy({
-        vehicle: {} as any // need to cast to any otherwise typescript wouldn't let me pass an empty object
+        vehicle: new VehicleInfo(undefined)
       })).toThrow(ValidationError);
     });
   });
@@ -46,7 +46,7 @@ describe('User profile', () => {
 
     it('throws a validation error when vehicle year is below 0', () => {
       expect(() => new UserProfileDummy({
-        vehicle: { year: -1 }
+        vehicle: new VehicleInfo(-1)
       })).toThrow(ValidationError);
     });
   });
@@ -65,9 +65,7 @@ describe('User profile', () => {
 
   it('throws a validation error when an invalid house ownership status is passed', () => {
     expect(() => new UserProfileDummy({
-      house: {
-        ownershipStatus: 'invalid' as any // need to cast to any otherwise typescript wouldn't let me pass an invalid value
-      }
+      house: new HouseInfo('invalid' as any) // need to cast to any otherwise typescript wouldn't let me pass an invalid value
     })).toThrow(ValidationError);
   });
 });

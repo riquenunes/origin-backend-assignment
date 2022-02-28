@@ -1,4 +1,5 @@
 import DisabilityInsuranceRiskCalculator from '../../src/domain/services/risk-calculators/DisabilityInsuranceRiskCalculator';
+import { HouseInfo } from '../../src/domain/UserProfile';
 import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('Disability insurance risk calculator', () => {
@@ -66,7 +67,7 @@ describe('Disability insurance risk calculator', () => {
       income: 1000,
       dependents: 0,
       maritalStatus: 'single',
-      house: { ownershipStatus: 'mortgaged' },
+      house: new HouseInfo('mortgaged'),
     });
 
     expect(insuranceRiskCalculator.calculate(input).riskScore).toBe(4);

@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { StatusCodes } from 'http-status-codes';
 import InsurancePlanAdvisor from '../../application/InsurancePlanAdvisor';
-import UserProfile from '../../domain/UserProfile';
+import UserProfile, { HouseInfo, VehicleInfo } from '../../domain/UserProfile';
 
 export const buildHandler = (insurancePlanAdvisor: InsurancePlanAdvisor) => (
   request: FastifyRequest<{ Body: Record<string, any> }>,
@@ -14,10 +14,8 @@ export const buildHandler = (insurancePlanAdvisor: InsurancePlanAdvisor) => (
     body.income,
     body.marital_status,
     body.risk_questions,
-    body.house && {
-      ownershipStatus: body.house.ownership_status,
-    },
-    body.vehicle,
+    body.house ? new HouseInfo(body.house.ownership_status) : undefined,
+    body.vehicle ? new VehicleInfo(body.vehicle.year) : undefined,
   );
 
   const response = insurancePlanAdvisor.getIdealInsurancePlans(userProfile);

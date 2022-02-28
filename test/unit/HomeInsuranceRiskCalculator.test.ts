@@ -1,4 +1,5 @@
 import HomeInsuranceRiskCalculator from '../../src/domain/services/risk-calculators/HomeInsuranceRiskCalculator';
+import { HouseInfo } from '../../src/domain/UserProfile';
 import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('Home insurance risk calculator', () => {
@@ -50,7 +51,7 @@ describe('Home insurance risk calculator', () => {
     const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
-      house: { ownershipStatus: 'mortgaged' },
+      house: new HouseInfo('mortgaged'),
       income: 1000,
     });
 

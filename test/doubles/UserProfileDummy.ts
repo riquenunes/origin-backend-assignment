@@ -1,4 +1,4 @@
-import UserProfile from '../../src/domain/UserProfile';
+import UserProfile, { HouseInfo, VehicleInfo } from '../../src/domain/UserProfile';
 import chance from 'chance';
 
 export default class UserProfileDummy extends UserProfile {
@@ -11,8 +11,8 @@ export default class UserProfileDummy extends UserProfile {
       'income' in overrides ? overrides.income : chance().integer({ min: 0, max: 1000000 }),
       'maritalStatus' in overrides ? overrides.maritalStatus : chance().pickone(['married', 'single']),
       'riskQuestions' in overrides ? overrides.riskQuestions : [1, 1, 1],
-      'house' in overrides ? overrides.house : { ownershipStatus: chance().pickone(['owned', 'mortgaged']) },
-      'vehicle' in overrides ? overrides.vehicle : { year: chance().integer({ min: 1960, max: 2020 }) }
+      'house' in overrides ? overrides.house : new HouseInfo(chance().pickone(['owned', 'mortgaged'])),
+      'vehicle' in overrides ? overrides.vehicle : new VehicleInfo(chance().integer({ min: 1960, max: 2020 }))
     );
   }
 }

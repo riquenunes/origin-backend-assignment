@@ -1,4 +1,5 @@
 import AutoInsuranceRiskCalculator from '../../src/domain/services/risk-calculators/AutoInsuranceRiskCalculator';
+import { VehicleInfo } from '../../src/domain/UserProfile';
 import UserProfileDummy from '../doubles/UserProfileDummy';
 
 describe('Auto insurance risk calculator', () => {
@@ -50,7 +51,7 @@ describe('Auto insurance risk calculator', () => {
     const input = new UserProfileDummy({
       age: 45,
       riskQuestions: [1, 1, 1],
-      vehicle: { year: new Date().getFullYear() - 3 },
+      vehicle: new VehicleInfo(new Date().getFullYear() - 3),
       income: 1000,
     });
 
