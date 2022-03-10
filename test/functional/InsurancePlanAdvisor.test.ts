@@ -34,7 +34,8 @@ describe('HTTP server', () => {
       home: expect.any(String),
       life: expect.any(String),
       disability: expect.any(String),
-      renters: expect.any(String)
+      renters: expect.any(String),
+      umbrella: expect.any(String),
     });
   });
 

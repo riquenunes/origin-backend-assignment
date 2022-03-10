@@ -11,6 +11,7 @@ describe('Insurance plan advisor', () => {
   let lifeInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
   let disabilityInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
   let rentersInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
+  let umbrellaInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
   let riskCalculationResultProcessorMock: RiskProfileProcessor;
   let useCase: InsurancePlanAdvisor;
   let profile: UserProfile;
@@ -21,13 +22,15 @@ describe('Insurance plan advisor', () => {
     lifeInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('life');
     disabilityInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('disability');
     rentersInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('renters');
-    riskCalculationResultProcessorMock = { process: jest.fn().mockReturnValue('result') };
+    umbrellaInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('umbrella');
+    riskCalculationResultProcessorMock = { process: jest.fn().mockImplementation((plan) => `${plan}_result`) };
     useCase = new InsurancePlanAdvisor(
       autoInsuranceRiskCalculatorMock,
       homeInsuranceRiskCalculatorMock,
       lifeInsuranceRiskCalculatorMock,
       disabilityInsuranceRiskCalculatorMock,
       rentersInsuranceRiskCalculatorMock,
+      umbrellaInsuranceRiskCalculatorMock,
       riskCalculationResultProcessorMock
     );
     profile = new UserProfileDummy();
@@ -41,6 +44,13 @@ describe('Insurance plan advisor', () => {
     expect(lifeInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
     expect(disabilityInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
     expect(rentersInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
+    expect(umbrellaInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile, [
+      'auto_result',
+      'home_result',
+      'life_result',
+      'disability_result',
+      'renters_result'
+    ]);
   });
 
   it('returns the calculation result processor result', () => {
@@ -51,12 +61,14 @@ describe('Insurance plan advisor', () => {
     expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('life');
     expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('disability');
     expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('renters');
+    expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('umbrella');
     expect(result).toEqual({
-      auto: 'result',
-      home: 'result',
-      life: 'result',
-      disability: 'result',
-      renters: 'result',
+      auto: 'auto_result',
+      home: 'home_result',
+      life: 'life_result',
+      disability: 'disability_result',
+      renters: 'renters_result',
+      umbrella: 'umbrella_result',
     });
   });
 });

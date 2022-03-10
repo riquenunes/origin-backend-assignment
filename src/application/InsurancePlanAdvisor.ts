@@ -10,6 +10,7 @@ export default class InsurancePlanAdvisor {
     private readonly lifeInsuranceRiskCalculator: InsuranceRiskCalculator,
     private readonly disabilityInsuranceRiskCalculator: InsuranceRiskCalculator,
     private readonly rentersInsuranceRiskCalculator: InsuranceRiskCalculator,
+    private readonly umbrellaInsuranceRiskCalculator: InsuranceRiskCalculator,
     private readonly riskProfileProcessor: RiskProfileProcessor,
   ) { }
 
@@ -30,12 +31,29 @@ export default class InsurancePlanAdvisor {
     const disabilityInsuranceRiskProfile = this.disabilityInsuranceRiskCalculator.calculate(profile);
     const rentersInsuranceRiskProfile = this.rentersInsuranceRiskCalculator.calculate(profile);
 
+    const autoInsurancePlan = this.riskProfileProcessor.process(autoInsuranceRiskProfile);
+    const homeInsurancePlan = this.riskProfileProcessor.process(homeInsuranceRiskProfile);
+    const lifeInsurancePlan = this.riskProfileProcessor.process(lifeInsuranceRiskProfile);
+    const disabilityInsurancePlan = this.riskProfileProcessor.process(disabilityInsuranceRiskProfile);
+    const rentersInsurancePlan = this.riskProfileProcessor.process(rentersInsuranceRiskProfile);
+
+    const umbrellaRiskProfile = this.umbrellaInsuranceRiskCalculator.calculate(profile, [
+      autoInsurancePlan,
+      homeInsurancePlan,
+      lifeInsurancePlan,
+      disabilityInsurancePlan,
+      rentersInsurancePlan
+    ]);
+
+    const umbrellaInsurancePlan = this.riskProfileProcessor.process(umbrellaRiskProfile);
+
     return {
-      auto: this.riskProfileProcessor.process(autoInsuranceRiskProfile),
-      home: this.riskProfileProcessor.process(homeInsuranceRiskProfile),
-      life: this.riskProfileProcessor.process(lifeInsuranceRiskProfile),
-      disability: this.riskProfileProcessor.process(disabilityInsuranceRiskProfile),
-      renters: this.riskProfileProcessor.process(rentersInsuranceRiskProfile),
+      auto: autoInsurancePlan,
+      home: homeInsurancePlan,
+      life: lifeInsurancePlan,
+      disability: disabilityInsurancePlan,
+      renters: rentersInsurancePlan,
+      umbrella: umbrellaInsurancePlan,
     };
   }
 }
