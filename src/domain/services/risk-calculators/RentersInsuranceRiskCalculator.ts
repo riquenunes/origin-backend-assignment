@@ -1,11 +1,11 @@
-import UnderThirtyRiskFactor from './risk-factors/UnderThirtyRiskFactor';
-import ThirtiesRiskFactor from './risk-factors/ThirtiesRiskFactor';
+import UserProfile from '../../UserProfile';
+import InsuranceRiskCalculator from './InsuranceRiskCalculator';
 import HouseOwnershipStatusRiskFactor from './risk-factors/HouseOwnershipStatusRiskFactor';
 import IncomeAmountRiskFactor from './risk-factors/IncomeAmountRiskFactor';
-import InsuranceRiskCalculator from './InsuranceRiskCalculator';
-import UserProfile from '../../UserProfile';
+import ThirtiesRiskFactor from './risk-factors/ThirtiesRiskFactor';
+import UnderThirtyRiskFactor from './risk-factors/UnderThirtyRiskFactor';
 
-export default class HomeInsuranceRiskCalculator extends InsuranceRiskCalculator {
+export default class RentersInsuranceRiskCalculator extends InsuranceRiskCalculator {
   constructor() {
     const riskFactors = new HouseOwnershipStatusRiskFactor()
 
@@ -18,10 +18,6 @@ export default class HomeInsuranceRiskCalculator extends InsuranceRiskCalculator
   }
 
   protected isElegible(profile: UserProfile): boolean {
-    if (profile.house) {
-      return profile.house?.ownershipStatus !== 'rented';
-    }
-
-    return false;
+    return profile.house?.ownershipStatus === 'rented';
   }
 }

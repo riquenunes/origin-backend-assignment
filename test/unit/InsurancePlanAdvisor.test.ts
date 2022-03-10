@@ -10,6 +10,7 @@ describe('Insurance plan advisor', () => {
   let homeInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
   let lifeInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
   let disabilityInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
+  let rentersInsuranceRiskCalculatorMock: InsuranceRiskCalculator;
   let riskCalculationResultProcessorMock: RiskProfileProcessor;
   let useCase: InsurancePlanAdvisor;
   let profile: UserProfile;
@@ -19,12 +20,14 @@ describe('Insurance plan advisor', () => {
     homeInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('home');
     lifeInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('life');
     disabilityInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('disability');
+    rentersInsuranceRiskCalculatorMock = new InsuranceRiskCalculatorMock('renters');
     riskCalculationResultProcessorMock = { process: jest.fn().mockReturnValue('result') };
     useCase = new InsurancePlanAdvisor(
       autoInsuranceRiskCalculatorMock,
       homeInsuranceRiskCalculatorMock,
       lifeInsuranceRiskCalculatorMock,
       disabilityInsuranceRiskCalculatorMock,
+      rentersInsuranceRiskCalculatorMock,
       riskCalculationResultProcessorMock
     );
     profile = new UserProfileDummy();
@@ -37,6 +40,7 @@ describe('Insurance plan advisor', () => {
     expect(homeInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
     expect(lifeInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
     expect(disabilityInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
+    expect(rentersInsuranceRiskCalculatorMock.calculate).toHaveBeenCalledWith(profile);
   });
 
   it('returns the calculation result processor result', () => {
@@ -46,11 +50,13 @@ describe('Insurance plan advisor', () => {
     expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('home');
     expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('life');
     expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('disability');
+    expect(riskCalculationResultProcessorMock.process).toHaveBeenCalledWith('renters');
     expect(result).toEqual({
       auto: 'result',
       home: 'result',
       life: 'result',
       disability: 'result',
+      renters: 'result',
     });
   });
 });

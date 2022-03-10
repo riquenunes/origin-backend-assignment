@@ -9,6 +9,7 @@ export default class InsurancePlanAdvisor {
     private readonly homeInsuranceRiskCalculator: InsuranceRiskCalculator,
     private readonly lifeInsuranceRiskCalculator: InsuranceRiskCalculator,
     private readonly disabilityInsuranceRiskCalculator: InsuranceRiskCalculator,
+    private readonly rentersInsuranceRiskCalculator: InsuranceRiskCalculator,
     private readonly riskProfileProcessor: RiskProfileProcessor,
   ) { }
 
@@ -27,12 +28,14 @@ export default class InsurancePlanAdvisor {
     const homeInsuranceRiskProfile = this.homeInsuranceRiskCalculator.calculate(profile);
     const lifeInsuranceRiskProfile = this.lifeInsuranceRiskCalculator.calculate(profile);
     const disabilityInsuranceRiskProfile = this.disabilityInsuranceRiskCalculator.calculate(profile);
+    const rentersInsuranceRiskProfile = this.rentersInsuranceRiskCalculator.calculate(profile);
 
     return {
       auto: this.riskProfileProcessor.process(autoInsuranceRiskProfile),
       home: this.riskProfileProcessor.process(homeInsuranceRiskProfile),
       life: this.riskProfileProcessor.process(lifeInsuranceRiskProfile),
       disability: this.riskProfileProcessor.process(disabilityInsuranceRiskProfile),
+      renters: this.riskProfileProcessor.process(rentersInsuranceRiskProfile),
     };
   }
 }

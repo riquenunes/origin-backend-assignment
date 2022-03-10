@@ -2,10 +2,14 @@ import ValidationError from './errors/ValidationError';
 
 export class HouseInfo {
   constructor(
-    public readonly ownershipStatus: 'owned' | 'mortgaged',
+    public readonly ownershipStatus: 'owned' | 'mortgaged' | 'rented',
   ) {
     if (ownershipStatus === undefined) throw new ValidationError('House ownership status is required');
-    if (ownershipStatus !== 'owned' && ownershipStatus !== 'mortgaged') throw new ValidationError('House ownership status must be either owned or mortgaged');
+    if (
+      ownershipStatus !== 'owned' &&
+      ownershipStatus !== 'mortgaged' &&
+      ownershipStatus !== 'rented'
+    ) throw new ValidationError('House ownership status must be either owned or mortgaged');
   }
 }
 

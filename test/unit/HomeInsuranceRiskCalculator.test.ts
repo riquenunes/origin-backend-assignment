@@ -10,6 +10,18 @@ describe('Home insurance risk calculator', () => {
     expect(insuranceRiskCalculator.calculate(input).isElegible).toBe(false);
   });
 
+  it('returns that the user is elegible for an home insurance plan when the user\'s house is not rented', () => {
+    const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
+    const mortgagedInput = new UserProfileDummy({ house: { ownershipStatus: 'mortgaged' } })
+    const ownedInput = new UserProfileDummy({ house: { ownershipStatus: 'owned' } })
+    const rentedInput = new UserProfileDummy({ house: { ownershipStatus: 'rented' } })
+
+    expect(insuranceRiskCalculator.calculate(mortgagedInput).isElegible).toBe(true);
+    expect(insuranceRiskCalculator.calculate(ownedInput).isElegible).toBe(true);
+    expect(insuranceRiskCalculator.calculate(rentedInput).isElegible).toBe(false);
+
+  });
+
   it('deducts 2 risk points from the home insurance score when the user is under 30 years old', () => {
     const insuranceRiskCalculator = new HomeInsuranceRiskCalculator();
     const input = new UserProfileDummy({

@@ -33,7 +33,8 @@ describe('HTTP server', () => {
       auto: expect.any(String),
       home: expect.any(String),
       life: expect.any(String),
-      disability: expect.any(String)
+      disability: expect.any(String),
+      renters: expect.any(String)
     });
   });
 
